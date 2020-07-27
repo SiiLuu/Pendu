@@ -1,0 +1,48 @@
+.App {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  letter-spacing: 0.4em;
+  font-size: 2.25rem;
+}
+
+.App h3 {
+  position: absolute;
+  top: -20%;
+  left: 10%;
+  letter-spacing: 0.05em;
+}
+
+.App h2 {
+  position: absolute;
+  top: -20%;
+  left: 85%;
+}
+
+.App h1 {
+  margin-bottom: 10%;
+}
+
+.App button {
+  min-width: 40px;
+  margin: 0.5%;
+  font-size: 1.75rem;
+}
+
+.App .taged {
+  color: red;
+}
+
+.App label,
+.App input {
+  margin-top: 5%;
+  letter-spacing: 0.05em;
+}
+
+.App input {
+  margin-left: 5%;
+  font-size: 1.75rem;
+}
