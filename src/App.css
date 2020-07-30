@@ -23,7 +23,11 @@
 }
 
 .App h1 {
-  margin-bottom: 10%;
+  margin-bottom: 4%;
+}
+
+.App img {
+  margin-top: 5%;
 }
 
 .App button {
