@@ -42,6 +42,7 @@ class App extends Component {
     if (lettersUsed.includes(letter)) {
       score -= 2
       this.changePlayer()
+      nbBadAnswer++
     } else {
       if (words[0].includes(letter)) {
         score += 2
@@ -51,9 +52,9 @@ class App extends Component {
         score -= 1
       }
       lettersUsed.push(letter)
-      this.setState({ lettersUsed, nbBadAnswer })
+      this.setState({ lettersUsed })
     }
-    this.setState({ score })
+    this.setState({ score, nbBadAnswer })
   }
 
   handleRestartClick = () => {
@@ -72,16 +73,17 @@ class App extends Component {
   }
 
   updateInput = (ev) => {
-    let { words, lettersUsed, players, currentPlayer } = this.state
+    let { words, lettersUsed, players, currentPlayer, score } = this.state
     if (ev.keyCode === 13) {
       if (ev.target.value.toUpperCase() === words[0]) {
         for (let i = 0; i < words[0].length; i++)
           lettersUsed.push(words[0][i])
       } else {
         currentPlayer === players[0] ? currentPlayer = players[1] : currentPlayer = players[0]
+        score -= 5
       }
     }
-    this.setState({ lettersUsed, currentPlayer })
+    this.setState({ lettersUsed, currentPlayer, score })
   }
 
   render() {
@@ -89,15 +91,15 @@ class App extends Component {
     let word = this.computeDisplay(words[0], lettersUsed)
     return (
       <div className="App">
-        { word.includes('_') ? <h3>À vous: {currentPlayer}</h3> : null }
-        { word.includes('_') ? <h2>{score}</h2> : null }
-        { word.includes('_') ? null : <h1>{currentPlayer} WON !!!</h1> }
+        { word.includes('_') && nbBadAnswer < 7 && <h3>À vous: {currentPlayer}</h3> }
+        { word.includes('_') && nbBadAnswer < 7 && <h2>{score}</h2> }
+        { (!word.includes('_') || nbBadAnswer > 6 ) && <h1>{currentPlayer} WON !!!</h1> }
         <img src={ (nbBadAnswer === 0) ? pendu1 : (nbBadAnswer === 1) ? pendu2 :
           (nbBadAnswer === 2) ? pendu3 : (nbBadAnswer === 3) ? pendu4 :
           (nbBadAnswer === 4) ? pendu5 : (nbBadAnswer === 5) ? pendu6 :
-          (nbBadAnswer === 1) ? pendu7 : pendu8 } alt="pendu"/>
-        <h1>{word}</h1>
-        {word.includes('_') && letters.slice(0, 13).map((letters, index) => (
+          (nbBadAnswer === 6) ? pendu7 : pendu8 } alt="pendu"/>
+        { nbBadAnswer < 7 && <h1>{word}</h1> }
+        {word.includes('_') && nbBadAnswer < 7 && letters.slice(0, 13).map((letters, index) => (
           <button
             key={index}
             className={ (lettersUsed.includes(letters)) ? "taged" : null }
@@ -106,7 +108,7 @@ class App extends Component {
           </button>
         ))}
         <br/>
-        {word.includes('_') && letters.slice(13).map((letters, index) => (
+        { word.includes('_') && nbBadAnswer < 7 && letters.slice(13).map((letters, index) => (
           <button
             key={index}
             className={ (lettersUsed.includes(letters)) ? "taged" : null }
@@ -115,11 +117,10 @@ class App extends Component {
           </button>
         ))}
         <br/>
-        { word.includes('_') ? <label htmlFor="guess">Try to guess :</label> : null }
-        { word.includes('_') ?
-          <input onKeyDown={this.updateInput}
-          type="guess" name="guess"></input> : null }
-        { word.includes('_') ? null : <button onClick={this.handleRestartClick}>RESTART</button> }
+        { word.includes('_') && nbBadAnswer < 7 && <label htmlFor="guess">Try to guess :</label> }
+        { word.includes('_') && nbBadAnswer < 7 &&
+          <input onKeyDown={this.updateInput} type="guess" name="guess"></input> }
+        { (!word.includes('_') || nbBadAnswer > 6 ) && <button onClick={this.handleRestartClick}>RESTART</button> }
       </div>
     )
   }
