@@ -1,25 +1,33 @@
+html {
+  background-image: url('./assets/bg.png');
+}
+
 .App {
   position: absolute;
-  width: 100%;
+  width: 75%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
   letter-spacing: 0.4em;
   font-size: 2.25rem;
+  background-color: white;
+  border: 3px black solid;
+  border-radius: 30px;
 }
 
 .App h3 {
   position: absolute;
   top: -20%;
-  left: 10%;
   letter-spacing: 0.05em;
+  color: white;
 }
 
 .App h2 {
   position: absolute;
   top: -20%;
-  left: 85%;
+  left: 97%;
+  color: white;
 }
 
 .App h1 {
@@ -43,10 +51,33 @@
 .App label,
 .App input {
   margin-top: 5%;
+  margin-bottom: 3%;
   letter-spacing: 0.05em;
 }
 
 .App input {
   margin-left: 5%;
   font-size: 1.75rem;
+}
+
+@media screen and (max-width: 1024px) {
+  .App button {
+    min-width: 20px;
+    margin: 0.5%;
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .App h1, .App h2, .App h3 {
+    font-size: 1.75rem;
+  }
+  .App input {
+    font-size: 1.5rem;
+    width: 230px;
+    margin-bottom: 7%;
+  }
+  .App label {
+    font-size: 1.5rem;
+  }
 }
